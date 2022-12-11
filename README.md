@@ -1,0 +1,2 @@
+# RubberPredictor
+Проект по ООП
