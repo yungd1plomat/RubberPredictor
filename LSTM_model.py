@@ -19,12 +19,9 @@ class LSTM_Model:
         model.add(Dropout(0.2))
         
         # Третий слой 50 нейронов и регуляризация
-        model.add(LSTM(units = 50, return_sequences = True))
-        model.add(Dropout(0.2))
-        
-        # Четвертый слой 50 нейронов и Dropout регуляризация
         model.add(LSTM(units = 50))
         model.add(Dropout(0.2))
+        
         
         # Выходной слой 3 выходных переменных, с активаций Relu
         model.add(Dense(3, activation='relu'))

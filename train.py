@@ -9,14 +9,17 @@ from sklearn.model_selection import train_test_split
 from LSTM_model import LSTM_Model
 from MLP_model import MLP_Model
 from keras.models import load_model
+from keras.callbacks import ModelCheckpoint
 import os
 
 # Путь сохранения моделей
 lstmPath = 'models/lstm.model'
 mlpPath = 'models/mlp.model'
+checkpoint_filepath = 'tmp'
+
 
 # Количество эпох для обучения
-EPOCHS = 800
+EPOCHS = 200
 # Количество обучающих примеров на итерацию
 BS = 128
 
@@ -74,7 +77,14 @@ if __name__ == "__main__":
 
     # Обучаем модель
     print("[INFO] training network...")
-    H = model.fit(trainX, trainY, epochs=EPOCHS, batch_size=BS, validation_data=(testX, testY), verbose=1)
+    model_checkpoint_callback = ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        save_weights_only=True,
+        monitor='val_accuracy',
+        mode='max',
+        save_best_only=True)
+    
+    H = model.fit(trainX, trainY, epochs=EPOCHS, batch_size=BS, validation_data=(testX, testY), callbacks=[model_checkpoint_callback])
 
     # Тестируем модель
     print("[INFO] evaluating model..")
