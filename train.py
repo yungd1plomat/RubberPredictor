@@ -15,7 +15,7 @@ import os
 # Путь сохранения моделей
 lstmPath = 'models/lstm.model'
 mlpPath = 'models/mlp.model'
-checkpoint_filepath = 'tmp'
+checkpoint_filepath = 'tmp/cp-{epoch:04d}.h5'
 
 
 # Количество эпох для обучения
@@ -73,16 +73,15 @@ if __name__ == "__main__":
     print("[INFO] compiling model...")
     model_choose = input("Выберите модель для обучения (1 - LSTM, 2 - MLP): ")
     model = build_model(model_choose)
-    model.compile(optimizer="adam", loss="mean_squared_error")
+    model.compile(optimizer="adam", loss="mae", metrics=["accuracy"])
 
     # Обучаем модель
     print("[INFO] training network...")
     model_checkpoint_callback = ModelCheckpoint(
         filepath=checkpoint_filepath,
-        save_weights_only=True,
-        monitor='val_accuracy',
-        mode='max',
-        save_best_only=True)
+        verbose=1, 
+        save_weights_only=False,
+        save_freq='epoch')
     
     H = model.fit(trainX, trainY, epochs=EPOCHS, batch_size=BS, validation_data=(testX, testY), callbacks=[model_checkpoint_callback])
 
