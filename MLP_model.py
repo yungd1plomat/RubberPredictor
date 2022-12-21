@@ -9,15 +9,15 @@ class MLP_Model:
         model = Sequential()
         
         # Первый слой 100 нейронов, 11 входных переменных
-        model.add(Dense(100, input_dim=11, activation='relu'))
+        model.add(Dense(40, input_dim=11, activation='relu'))
         
         # Второй слой 100 нейронов
-        model.add(Dense(100, activation='relu'))
+        model.add(Dense(60, activation='relu'))
         
         # Третий слой 80 нейронов
-        model.add(Dense(80, activation='relu'))
+        model.add(Dense(40, activation='relu'))
         
-        # Выходной слой 3 выходных переменных, с активаций Relu
+        # Выходной слой 3 выходных переменных, с сигмоидной активацией
         model.add(Dense(3, activation='sigmoid'))
 
         return model

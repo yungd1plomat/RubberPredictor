@@ -21,7 +21,7 @@ checkpoint_filepath = 'tmp/cp-{epoch:04d}.h5'
 # Количество эпох для обучения
 EPOCHS = 200
 # Количество обучающих примеров на итерацию
-BS = 128
+BS = 256
 
 def build_model(model_choose):
     if model_choose == "1" and os.path.isfile(lstmPath):
